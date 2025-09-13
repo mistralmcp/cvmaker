@@ -1,11 +1,14 @@
-from pathlib import Path
 from typing import List, Optional
+from pathlib import Path
 
 from .utils import validate_resume_model, render_tex, compile_pdf
 
 
 def generate_resume(
     base_name: str,
+    template_name: str,
+    templates_dir: Path,
+    output_dir: Path,
     # Required Document meta
     pdf_title: str,
     pdf_author: str,
@@ -13,8 +16,8 @@ def generate_resume(
     name: str,
     location: str,
     email: str,
-    phone: str,
     # Optional Header
+    phone: Optional[str] = None,
     website_url: Optional[str] = None,
     website_label: Optional[str] = None,
     linkedin_url: Optional[str] = None,
@@ -49,10 +52,6 @@ def generate_resume(
     # Technologies
     languages: Optional[List[str]] = None,
     technologies: Optional[List[str]] = None,
-    # Template configuration
-    template_name: str = "classic.tex.j2",
-    templates_dir: Optional[Path] = None,
-    output_dir: Optional[Path] = None,
 ) -> Path:
     """
     Generate a resume PDF from structured resume data.
@@ -99,14 +98,6 @@ def generate_resume(
     Returns:
         Path to the generated PDF file
     """
-    if templates_dir is None:
-        project_root = Path(__file__).parent.parent
-        templates_dir = project_root / "templates"
-
-    if output_dir is None:
-        project_root = Path(__file__).parent.parent
-        output_dir = project_root / "build"
-
     model = validate_resume_model(
         # Document meta
         pdf_title=pdf_title,

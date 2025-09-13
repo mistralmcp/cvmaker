@@ -1,8 +1,14 @@
+from typing import List, Optional
+
 from fastmcp import FastMCP
 from pathlib import Path
 from uuid import uuid4
 
-from src.prompts import RESUME_INSTRUCTIONS_PROMPT
+from src.instructions import (
+    RESUME_INSTRUCTIONS_PROMPT,
+    SERVER_INSTRUCTIONS,
+    TOOL_DESCRIPTION,
+)
 from src.generate import generate_resume
 from src.utils import upload_to_bucket
 
@@ -10,10 +16,10 @@ from src.utils import upload_to_bucket
 PROJECT_ROOT = Path(__file__).parent
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 TEMPLATE_NAME = "classic.tex.j2"
-OUTPUT_DIR = PROJECT_ROOT / "build"
+OUTPUT_DIR = PROJECT_ROOT / "output"
 
 
-mcp = FastMCP(name="cvmaker")
+mcp = FastMCP(name="cvmaker", instructions=SERVER_INSTRUCTIONS)
 
 
 @mcp.prompt
@@ -24,10 +30,7 @@ def base_instructions():
     return RESUME_INSTRUCTIONS_PROMPT
 
 
-@mcp.tool(
-    name="generate_resume_pdf",
-    description="Generate a professional resume PDF from structured data. Takes personal information, education, experience, publications, projects, and skills as input and produces a formatted PDF using LaTeX.",
-)
+@mcp.tool(name="generate_resume_pdf", description=TOOL_DESCRIPTION)
 def generate_resume_pdf(
     pdf_title: str,
     pdf_author: str,
@@ -35,42 +38,42 @@ def generate_resume_pdf(
     name: str,
     location: str,
     email: str,
-    phone: str,
     # Optional Header
-    website_url: str = None,
-    website_label: str = None,
-    linkedin_url: str = None,
-    linkedin_handle: str = None,
-    github_url: str = None,
-    github_handle: str = None,
+    phone: Optional[str] = None,
+    website_url: Optional[str] = None,
+    website_label: Optional[str] = None,
+    linkedin_url: Optional[str] = None,
+    linkedin_handle: Optional[str] = None,
+    github_url: Optional[str] = None,
+    github_handle: Optional[str] = None,
     # Intro section
-    intro_paragraphs: list = None,
+    intro_paragraphs: Optional[List[str]] = None,
     # Education entries
-    education_degrees: list = None,
-    education_date_ranges: list = None,
-    education_institutions: list = None,
-    education_fields_of_study: list = None,
-    education_highlights: list = None,
+    education_degrees: Optional[List[str]] = None,
+    education_date_ranges: Optional[List[str]] = None,
+    education_institutions: Optional[List[str]] = None,
+    education_fields_of_study: Optional[List[str]] = None,
+    education_highlights: Optional[List[List[str]]] = None,
     # Experience entries
-    experience_companies: list = None,
-    experience_roles: list = None,
-    experience_locations: list = None,
-    experience_date_ranges: list = None,
-    experience_highlights: list = None,
+    experience_companies: Optional[List[str]] = None,
+    experience_roles: Optional[List[str]] = None,
+    experience_locations: Optional[List[str]] = None,
+    experience_date_ranges: Optional[List[str]] = None,
+    experience_highlights: Optional[List[List[str]]] = None,
     # Publication entries
-    publication_dates: list = None,
-    publication_titles: list = None,
-    publication_authors: list = None,
-    publication_doi_urls: list = None,
-    publication_doi_labels: list = None,
+    publication_dates: Optional[List[str]] = None,
+    publication_titles: Optional[List[str]] = None,
+    publication_authors: Optional[List[List[str]]] = None,
+    publication_doi_urls: Optional[List[str]] = None,
+    publication_doi_labels: Optional[List[str]] = None,
     # Project entries
-    project_titles: list = None,
-    project_repo_urls: list = None,
-    project_repo_labels: list = None,
-    project_highlights: list = None,
+    project_titles: Optional[List[str]] = None,
+    project_repo_urls: Optional[List[str]] = None,
+    project_repo_labels: Optional[List[str]] = None,
+    project_highlights: Optional[List[List[str]]] = None,
     # Technologies
-    languages: list = None,
-    technologies: list = None,
+    languages: Optional[List[str]] = None,
+    technologies: Optional[List[str]] = None,
 ) -> str:
     """
     Generate a professional resume PDF from structured data using LaTeX templating.
@@ -81,48 +84,46 @@ def generate_resume_pdf(
         name (str): Full name of the candidate
         location (str): Current location/city of the candidate
         email (str): Contact email address
-        phone (str): Contact phone number
-        website_url (str, optional): URL to personal website
-        website_label (str, optional): Display label for website URL
-        linkedin_url (str, optional): URL to LinkedIn profile
-        linkedin_handle (str, optional): LinkedIn username/handle
-        github_url (str, optional): URL to GitHub profile
-        github_handle (str, optional): GitHub username/handle
-        intro_paragraphs (list, optional): List of introduction/summary paragraphs
-        education_degrees (list, optional): List of degree names/titles
-        education_date_ranges (list, optional): List of education date ranges (e.g., ["2018-2022"])
-        education_institutions (list, optional): List of educational institutions
-        education_fields_of_study (list, optional): List of fields/majors studied
-        education_highlights (list, optional): List of lists containing bullet points for each education entry
-        experience_companies (list, optional): List of company names
-        experience_roles (list, optional): List of job titles/roles
-        experience_locations (list, optional): List of job locations
-        experience_date_ranges (list, optional): List of employment date ranges
-        experience_highlights (list, optional): List of lists containing bullet points for each experience entry
-        publication_dates (list, optional): List of publication dates
-        publication_titles (list, optional): List of publication titles
-        publication_authors (list, optional): List of author lists for each publication
-        publication_doi_urls (list, optional): List of DOI URLs for publications
-        publication_doi_labels (list, optional): List of DOI display labels
-        project_titles (list, optional): List of project titles
-        project_repo_urls (list, optional): List of repository/project URLs
-        project_repo_labels (list, optional): List of repository/project display labels
-        project_highlights (list, optional): List of lists containing bullet points for each project
-        languages (list, optional): List of programming languages
-        technologies (list, optional): List of technologies/frameworks/tools
+        phone (Optional[str]): Contact phone number
+        website_url (Optional[str]): URL to personal website
+        website_label (Optional[str]): Display label for website URL
+        linkedin_url (Optional[str]): URL to LinkedIn profile
+        linkedin_handle (Optional[str]): LinkedIn username/handle
+        github_url (Optional[str]): URL to GitHub profile
+        github_handle (Optional[str]): GitHub username/handle
+        intro_paragraphs (Optional[List[str]]): List of introduction/summary paragraphs
+        education_degrees (Optional[List[str]]): List of degree names/titles
+        education_date_ranges (Optional[List[str]]): List of education date ranges (e.g., ["2018-2022"])
+        education_institutions (Optional[List[str]]): List of educational institutions
+        education_fields_of_study (Optional[List[str]]): List of fields/majors studied
+        education_highlights (Optional[List[List[str]]]): List of lists containing bullet points for each education entry
+        experience_companies (Optional[List[str]]): List of company names
+        experience_roles (Optional[List[str]]): List of job titles/roles
+        experience_locations (Optional[List[str]]): List of job locations
+        experience_date_ranges (Optional[List[str]]): List of employment date ranges
+        experience_highlights (Optional[List[List[str]]]): List of lists containing bullet points for each experience entry
+        publication_dates (Optional[List[str]]): List of publication dates
+        publication_titles (Optional[List[str]]): List of publication titles
+        publication_authors (Optional[List[List[str]]]): List of author lists for each publication
+        publication_doi_urls (Optional[List[str]]): List of DOI URLs for publications
+        publication_doi_labels (Optional[List[str]]): List of DOI display labels
+        project_titles (Optional[List[str]]): List of project titles
+        project_repo_urls (Optional[List[str]]): List of repository/project URLs
+        project_repo_labels (Optional[List[str]]): List of repository/project display labels
+        project_highlights (Optional[List[List[str]]]): List of lists containing bullet points for each project
+        languages (Optional[List[str]]): List of programming languages
+        technologies (Optional[List[str]]): List of technologies/frameworks/tools
 
     Returns:
-        str: Absolute path to the generated PDF file
-
-    Note:
-        - All list parameters should have matching lengths within their respective sections
-        - For optional sections, all related parameters should either all be provided or all be None
-        - The generated PDF uses the classic LaTeX template located in the templates directory
+        str: URL of the generated PDF file
     """
     base_name = str(uuid4().hex)
 
     pdf_path = generate_resume(
         base_name=base_name,
+        template_name=TEMPLATE_NAME,
+        templates_dir=TEMPLATES_DIR,
+        output_dir=OUTPUT_DIR,
         # Document meta
         pdf_title=pdf_title,
         pdf_author=pdf_author,
@@ -165,10 +166,6 @@ def generate_resume_pdf(
         # Technologies
         languages=languages,
         technologies=technologies,
-        # Template configuration
-        template_name=TEMPLATE_NAME,
-        templates_dir=TEMPLATES_DIR,
-        output_dir=OUTPUT_DIR,
     )
 
     if pdf_path.exists():
@@ -180,4 +177,4 @@ def generate_resume_pdf(
 
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    mcp.run(transport="http", port=8000)

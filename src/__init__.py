@@ -1,1 +1,1 @@
-from . import utils, models, prompts, generate
+from . import utils, models, instructions, generate

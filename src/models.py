@@ -15,7 +15,7 @@ class Header(BaseModel):
     name: str
     location: str
     email: EmailStr
-    phone: str
+    phone: Optional[str] = None
     website_url: Optional[HttpUrl] = None
     website_label: Optional[str] = None
     linkedin_url: Optional[HttpUrl] = None

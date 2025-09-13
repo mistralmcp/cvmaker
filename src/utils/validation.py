@@ -20,8 +20,8 @@ def validate_resume_model(
     name: str,
     location: str,
     email: str,
-    phone: str,
     # Optional Header
+    phone: Optional[str] = None,
     website_url: Optional[str] = None,
     website_label: Optional[str] = None,
     linkedin_url: Optional[str] = None,

@@ -194,10 +194,12 @@
         \AND%
         \kern 0.25 cm%
         \mbox{\hrefWithoutArrow{mailto:<< resume.header.email >>}{{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}<< resume.header.email >>}}%
+        <<% if resume.header.phone %>>
         \kern 0.25 cm%
         \AND%
         \kern 0.25 cm%
         \mbox{\hrefWithoutArrow{tel:<< resume.header.phone | replace(' ', '') | replace('-', '') >>}{{\footnotesize\faPhone*}\hspace*{0.13cm}<< resume.header.phone >>}}%
+        <<% endif %>>
         <<% if resume.header.website_url %>>
         \kern 0.25 cm%
         \AND%
