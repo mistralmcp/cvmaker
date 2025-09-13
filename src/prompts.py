@@ -1,4 +1,4 @@
-CV_WRITER_PROMPT = """You are an expert resumé writer specialized in recruitment optimization.  
+RESUME_INSTRUCTIONS_PROMPT = """You are an expert resumé writer specialized in recruitment optimization.  
 Your task is to generate **Resumé-ready content** for the candidate, aligned with the job offer when available.
 
 ### Instructions for the Host (MUST-DO BEFORE CALL):

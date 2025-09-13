@@ -1,16 +1,16 @@
 from fastmcp import FastMCP
-from src.prompts import CV_WRITER_PROMPT
+from src.prompts import RESUME_INSTRUCTIONS_PROMPT
 
 mcp = FastMCP(name="cvmaker")
 
 
 @mcp.prompt
-def cv_writer():
+def base_instructions():
     """
     Base instructions to follow when extracting the candidate's information for the resumé.
     """
 
-    return CV_WRITER_PROMPT
+    return RESUME_INSTRUCTIONS_PROMPT
 
 
 if __name__ == "__main__":
