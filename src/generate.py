@@ -1,4 +1,3 @@
-from uuid import uuid4
 from pathlib import Path
 from typing import List, Optional
 
@@ -6,6 +5,7 @@ from .utils import validate_resume_model, render_tex, compile_pdf
 
 
 def generate_resume(
+    base_name: str,
     # Required Document meta
     pdf_title: str,
     pdf_author: str,
@@ -152,7 +152,6 @@ def generate_resume(
         technologies=technologies,
     )
 
-    base_name = str(uuid4().hex)
     out_tex = output_dir / f"{base_name}.tex"
     out_pdf = output_dir / f"{base_name}.pdf"
 

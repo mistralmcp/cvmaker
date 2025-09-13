@@ -236,10 +236,10 @@
 
 
         <<% for edu in resume.education %>>
-        \begin{threecolentry}{\textbf{ << edu.degree >> }}{
+        \begin{twocolentry}{
             << edu.date_range >>
         }
-            \textbf{ << edu.institution >> }<<% if edu.field_of_study %>>, << edu.field_of_study >><<% endif %>>
+            \textbf{ << edu.degree >> }, \textbf{ << edu.institution >> }<<% if edu.field_of_study %>>, << edu.field_of_study >><<% endif %>>
             <<% if edu.highlights %>>
             \begin{highlights}
                 <<% for h in edu.highlights %>>
@@ -247,7 +247,10 @@
                 <<% endfor %>>
             \end{highlights}
             <<% endif %>>
-        \end{threecolentry}
+        \end{twocolentry}
+        <<% if not loop.last %>>
+        \vspace{0.2 cm}
+        <<% endif %>>
         <<% endfor %>>
 
 

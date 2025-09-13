@@ -1,8 +1,10 @@
 from fastmcp import FastMCP
 from pathlib import Path
+from uuid import uuid4
 
 from src.prompts import RESUME_INSTRUCTIONS_PROMPT
 from src.generate import generate_resume
+from src.utils import upload_to_bucket
 
 
 PROJECT_ROOT = Path(__file__).parent
@@ -117,7 +119,10 @@ def generate_resume_pdf(
         - For optional sections, all related parameters should either all be provided or all be None
         - The generated PDF uses the classic LaTeX template located in the templates directory
     """
+    base_name = str(uuid4().hex)
+
     pdf_path = generate_resume(
+        base_name=base_name,
         # Document meta
         pdf_title=pdf_title,
         pdf_author=pdf_author,
@@ -166,7 +171,12 @@ def generate_resume_pdf(
         output_dir=OUTPUT_DIR,
     )
 
-    return str(pdf_path)
+    if pdf_path.exists():
+        return upload_to_bucket(
+            file_path=pdf_path, destination_blob_name=f"{base_name}.pdf"
+        )
+    else:
+        return "Error: PDF file not found"
 
 
 if __name__ == "__main__":
