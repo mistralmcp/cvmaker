@@ -3,6 +3,7 @@ from typing import List, Optional
 from fastmcp import FastMCP
 from pathlib import Path
 from uuid import uuid4
+from decouple import config
 
 from src.instructions import (
     RESUME_INSTRUCTIONS_PROMPT,
@@ -17,6 +18,11 @@ PROJECT_ROOT = Path(__file__).parent
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 TEMPLATE_NAME = "classic.tex.j2"
 OUTPUT_DIR = PROJECT_ROOT / "output"
+
+if config("IS_DEV") == "true":
+    PORT = 3000
+else:
+    PORT = 8000
 
 
 mcp = FastMCP(name="cvmaker", instructions=SERVER_INSTRUCTIONS)
@@ -177,4 +183,4 @@ def generate_resume_pdf(
 
 
 if __name__ == "__main__":
-    mcp.run(transport="http", port=8000)
+    mcp.run(transport="http", port=3000)
