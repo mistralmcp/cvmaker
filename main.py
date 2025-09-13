@@ -14,21 +14,31 @@ from src.generate import generate_resume
 from src.utils import upload_to_bucket
 
 
+SERVER_NAME = "salutcv"
 PROJECT_ROOT = Path(__file__).parent
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 TEMPLATE_NAME = "classic.tex.j2"
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
+
+server_kwargs = {
+    "name": SERVER_NAME,
+    "instructions": SERVER_INSTRUCTIONS,
+}
+
+
 if config("IS_DEV") == "true":
-    PORT = 3000
+    mcp = FastMCP(**server_kwargs)
 else:
-    PORT = 8000
+    mcp = FastMCP(
+        port=3000, 
+        stateless_http=True, 
+        debug=True, 
+        **server_kwargs
+    )
 
 
-mcp = FastMCP(name="cvmaker", instructions=SERVER_INSTRUCTIONS)
-
-
-@mcp.prompt
+@mcp.prompt("")
 def base_instructions():
     """
     Base instructions to follow when extracting the candidate's information for the resumé.
