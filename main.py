@@ -49,7 +49,7 @@ def base_instructions():
     return RESUME_INSTRUCTIONS_PROMPT
 
 
-@mcp.tool(name="generate_resume_pdf", description=TOOL_DESCRIPTION)
+@mcp.tool(name="generate_resume_pdf", description=RESUME_INSTRUCTIONS_PROMPT)
 def generate_resume_pdf(
     pdf_title: str,
     pdf_author: str,
