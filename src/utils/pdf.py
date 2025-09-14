@@ -56,9 +56,12 @@ def _run_tectonic(
     env["TMPDIR"] = "/tmp"
     env["TMP"] = "/tmp"
     env["TEMP"] = "/tmp"
+    env["HOME"] = "/tmp"
+    env["XDG_CACHE_HOME"] = "/tmp/cache"
+    env["XDG_DATA_HOME"] = "/tmp/data"
     
-    cache_dir = Path("/tmp/tectonic-cache")
-    cache_dir.mkdir(parents=True, exist_ok=True)
+    for dir_path in ["/tmp/tectonic-cache", "/tmp/cache", "/tmp/data"]:
+        Path(dir_path).mkdir(parents=True, exist_ok=True)
 
     outdir.mkdir(parents=True, exist_ok=True)
 
