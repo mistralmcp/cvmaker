@@ -1,91 +1,59 @@
 # cvmaker
 
-A Python tool to generate professional resumes in PDF format using LaTeX templates.
+MCP server to generate professional resumes in PDF format and return the URL to the PDF.
 
-## Live Server
+## MCP Server Connection
 
-The service is deployed and accessible at: [https://cvmaker-0c81a29d.alpic.live/](https://cvmaker-0c81a29d.alpic.live/)
+Connect to the MCP server from:
+- Copy this link : https://cvmaker-0c81a29d.alpic.live/mcp
+- Enter the link when creating a connector on: Claude Desktop, ChatGPT, Le Chat
 
 ## Prerequisites
 
 1. Python 3.10 or higher
-2. A LaTeX engine (one of the following):
-   - **Tectonic** (recommended) - A self-contained LaTeX engine
-   - **latexmk** - Part of a full LaTeX distribution like MacTeX or TexLive
+2. Tectonic - A self-contained LaTeX engine
 
-### Installing LaTeX Engine
-
-Choose one of the following methods:
-
-#### Option 1: Tectonic (Recommended)
+### Installing Tectonic
 
 **macOS:**
-- Using Homebrew:
 ```bash
 brew install tectonic
 ```
-- Direct download: [Tectonic for macOS](https://github.com/tectonic-typesetting/tectonic/releases)
 
 **Linux:**
 The Tectonic executable is already included in the `bin/` directory of this project. No additional installation is needed.
 
 For manual installation:
 ```bash
-curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh  # Install Rust first
+curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh
 cargo install tectonic
 ```
 
 **Windows:**
-- Using package managers:
 ```bash
 scoop install tectonic
 # or
 choco install tectonic
 ```
-- Direct download: [Tectonic for Windows](https://github.com/tectonic-typesetting/tectonic/releases)
-
-#### Option 2: Full LaTeX Distribution
-
-**macOS:**
-```bash
-brew install --cask mactex
-```
-
-**Linux:**
-```bash
-sudo apt-get install texlive-full latexmk
-```
-
-**Windows:**
-- Download and install MiKTeX from https://miktex.org/download
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/cvmaker.git
+git clone https://github.com/mistralmcp/cvmaker.git
 cd cvmaker
 ```
 
 2. Create and activate a virtual environment:
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # On Unix/macOS
-# or
-.venv\Scripts\activate  # On Windows
+source .venv/bin/activate
 ```
 
-3. Install dependencies:
+3. Install dependencies using uv:
 ```bash
-pip install -r requirements.txt
-```
-
-## Development Setup
-
-For development, you'll need additional packages:
-
-```bash
-pip install pytest pytest-mock
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv pip install -r requirements.txt
 ```
 
 ## Project Structure
@@ -98,17 +66,9 @@ cvmaker/
 │   ├── generate.py      # Main resume generation logic
 │   ├── models.py        # Pydantic models for data validation
 │   ├── instructions.py  # AI instructions and prompts
-│   └── utils/
-│       ├── pdf.py       # PDF compilation utilities
-│       ├── tex.py       # LaTeX rendering utilities
-│       ├── storage.py   # Storage utilities
-│       └── validation.py # Data validation utilities
+│   └── utils/          # Various utilities
 ├── templates/
 │   └── classic.tex.j2   # Default LaTeX template
-├── tests/
-│   └── __init__.py     # Test package initialization
-├── tmp/                # Temporary files directory
 ├── main.py            # CLI entry point
-├── pyproject.toml     # Project configuration
-└── README.md          # Project documentation
+└── pyproject.toml     # Project configuration
 ```
