@@ -34,6 +34,11 @@ else:
     mcp = FastMCP(port=3000, stateless_http=True, debug=True, **server_kwargs)
 
 
+@mcp.custom_route("/health", methods=["GET"])
+def health():
+    return {"ok": True}
+
+
 @mcp.prompt("")
 def base_instructions():
     """
