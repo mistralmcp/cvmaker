@@ -121,11 +121,6 @@ def generate_resume_pdf(
         experience_locations (Optional[List[str]]): List of job locations
         experience_date_ranges (Optional[List[str]]): List of employment date ranges
         experience_highlights (Optional[List[List[str]]]): List of lists containing bullet points for each experience entry
-        publication_dates (Optional[List[str]]): List of publication dates
-        publication_titles (Optional[List[str]]): List of publication titles
-        publication_authors (Optional[List[List[str]]]): List of author lists for each publication
-        publication_doi_urls (Optional[List[str]]): List of DOI URLs for publications
-        publication_doi_labels (Optional[List[str]]): List of DOI display labels
         project_titles (Optional[List[str]]): List of project titles
         project_repo_urls (Optional[List[str]]): List of repository/project URLs
         project_repo_labels (Optional[List[str]]): List of repository/project display labels
@@ -163,11 +158,6 @@ def generate_resume_pdf(
         'experience_locations': experience_locations,
         'experience_date_ranges': experience_date_ranges,
         'experience_highlights': experience_highlights,
-        'publication_dates': publication_dates,
-        'publication_titles': publication_titles,
-        'publication_authors': publication_authors,
-        'publication_doi_urls': publication_doi_urls,
-        'publication_doi_labels': publication_doi_labels,
         'project_titles': project_titles,
         'project_repo_urls': project_repo_urls,
         'project_repo_labels': project_repo_labels,
@@ -175,6 +165,7 @@ def generate_resume_pdf(
         'languages': languages,
         'technologies': technologies,
     }
+
     logging.info("Generating resume with parameters:")
     for key, value in params.items():
         if value is not None:
@@ -213,12 +204,6 @@ def generate_resume_pdf(
         experience_locations=experience_locations,
         experience_date_ranges=experience_date_ranges,
         experience_highlights=experience_highlights,
-        # Publication entries
-        publication_dates=publication_dates,
-        publication_titles=publication_titles,
-        publication_authors=publication_authors,
-        publication_doi_urls=publication_doi_urls,
-        publication_doi_labels=publication_doi_labels,
         # Project entries
         project_titles=project_titles,
         project_repo_urls=project_repo_urls,
