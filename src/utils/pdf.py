@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import os
+import stat
 import subprocess
 from pathlib import Path
-
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 TECTONIC_BIN = PROJECT_ROOT / "bin" / "tectonic"
@@ -28,6 +28,10 @@ def compile_pdf(
 def _ensure_tectonic() -> None:
     if not TECTONIC_BIN.exists():
         raise RuntimeError(f"Tectonic binary not found at {TECTONIC_BIN}")
+    
+    mode = TECTONIC_BIN.stat().st_mode
+    if not mode & stat.S_IEXEC:
+        TECTONIC_BIN.chmod(mode | stat.S_IEXEC)
 
 
 def _run_tectonic(
