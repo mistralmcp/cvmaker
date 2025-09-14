@@ -16,7 +16,7 @@ from src.utils.storage import upload_to_bucket
 SERVER_NAME = "salutcv"
 TEMPLATES_DIR = "./templates"
 TEMPLATE_NAME = "classic.tex.j2"
-OUTPUT_DIR = "/tmp"
+OUTPUT_DIR = "/tmp/output"
 
 
 server_kwargs = {
