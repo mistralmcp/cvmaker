@@ -1,8 +1,14 @@
 from typing import List, Optional
+import logging
 
 from fastmcp import FastMCP
 from pathlib import Path
 from uuid import uuid4
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 from src.instructions import (
     RESUME_INSTRUCTIONS_PROMPT,
@@ -131,6 +137,48 @@ def generate_resume_pdf(
         str: URL of the generated PDF file
     """
     base_name = str(uuid4().hex)
+
+    # Log all parameters
+    params = {
+        'pdf_title': pdf_title,
+        'pdf_author': pdf_author,
+        'name': name,
+        'location': location,
+        'email': email,
+        'phone': phone,
+        'website_url': website_url,
+        'website_label': website_label,
+        'linkedin_url': linkedin_url,
+        'linkedin_handle': linkedin_handle,
+        'github_url': github_url,
+        'github_handle': github_handle,
+        'intro_paragraphs': intro_paragraphs,
+        'education_degrees': education_degrees,
+        'education_date_ranges': education_date_ranges,
+        'education_institutions': education_institutions,
+        'education_fields_of_study': education_fields_of_study,
+        'education_highlights': education_highlights,
+        'experience_companies': experience_companies,
+        'experience_roles': experience_roles,
+        'experience_locations': experience_locations,
+        'experience_date_ranges': experience_date_ranges,
+        'experience_highlights': experience_highlights,
+        'publication_dates': publication_dates,
+        'publication_titles': publication_titles,
+        'publication_authors': publication_authors,
+        'publication_doi_urls': publication_doi_urls,
+        'publication_doi_labels': publication_doi_labels,
+        'project_titles': project_titles,
+        'project_repo_urls': project_repo_urls,
+        'project_repo_labels': project_repo_labels,
+        'project_highlights': project_highlights,
+        'languages': languages,
+        'technologies': technologies,
+    }
+    logging.info("Generating resume with parameters:")
+    for key, value in params.items():
+        if value is not None:
+            logging.info(f"{key}: {value}")
 
     pdf_path = generate_resume(
         base_name=base_name,
