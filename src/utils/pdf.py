@@ -70,8 +70,6 @@ def _run_tectonic(
         "--keep-logs",
         "--synctex=0",
         "--untrusted",
-        "--web-bundle",
-        "https://data1.fullyjustified.net/tlextras-2023.1r0.tar",
         "--outdir",
         str(outdir),
         str(tex_path),
