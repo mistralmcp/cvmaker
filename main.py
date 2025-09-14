@@ -79,12 +79,6 @@ def generate_resume_pdf(
     experience_locations: Optional[List[str]] = None,
     experience_date_ranges: Optional[List[str]] = None,
     experience_highlights: Optional[List[List[str]]] = None,
-    # Publication entries
-    publication_dates: Optional[List[str]] = None,
-    publication_titles: Optional[List[str]] = None,
-    publication_authors: Optional[List[List[str]]] = None,
-    publication_doi_urls: Optional[List[str]] = None,
-    publication_doi_labels: Optional[List[str]] = None,
     # Project entries
     project_titles: Optional[List[str]] = None,
     project_repo_urls: Optional[List[str]] = None,
