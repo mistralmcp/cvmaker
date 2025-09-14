@@ -51,6 +51,14 @@ def _run_tectonic(
         env["TEXINPUTS"] = os.pathsep.join(texinputs_parts + [existing])
     else:
         env["TEXINPUTS"] = os.pathsep.join(texinputs_parts)
+    
+    env["TECTONIC_CACHE_DIR"] = "/tmp/tectonic-cache"
+    env["TMPDIR"] = "/tmp"
+    env["TMP"] = "/tmp"
+    env["TEMP"] = "/tmp"
+    
+    cache_dir = Path("/tmp/tectonic-cache")
+    cache_dir.mkdir(parents=True, exist_ok=True)
 
     outdir.mkdir(parents=True, exist_ok=True)
 
