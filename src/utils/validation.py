@@ -163,14 +163,12 @@ def validate_resume_model(
         languages=languages or [], technologies=technologies or []
     )
 
-    # Build and validate complete resume data
     resume_data = {
         "meta": meta_data,
         "header": header,
         "intro_paragraphs": intro_paragraphs or [],
         "education": education_entries,
         "experience": experience_entries,
-        "publications": publication_entries,
         "projects": project_entries,
         "technologies_section": technologies_section,
     }

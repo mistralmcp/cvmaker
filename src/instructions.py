@@ -5,7 +5,7 @@ This MCP server provides AI-powered resume generation through LaTeX templating, 
 
 TOOL_DESCRIPTION = (
     "Generate a professional resume PDF from structured data. "
-    "Takes personal information, education, experience, publications, projects, "
+    "Takes personal information, education, experience, projects, "
     "and skills as input and produces a formatted PDF using LaTeX."
 )
 

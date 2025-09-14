@@ -60,7 +60,20 @@ def _run_tectonic(
     env["XDG_CACHE_HOME"] = "/tmp/cache"
     env["XDG_DATA_HOME"] = "/tmp/data"
     
-    for dir_path in ["/tmp/tectonic-cache", "/tmp/cache", "/tmp/data"]:
+    # TeX-specific environment variables for Lambda
+    env["TEXMFHOME"] = "/tmp/texmf"
+    env["TEXMFVAR"] = "/tmp/texmf-var"
+    env["TEXMFCONFIG"] = "/tmp/texmf-config"
+    env["TEXMFSYSVAR"] = "/tmp/texmf-sysvar"
+    env["TEXMFSYSCONFIG"] = "/tmp/texmf-sysconfig"
+    
+    # Create all necessary directories
+    tex_dirs = [
+        "/tmp/tectonic-cache", "/tmp/cache", "/tmp/data",
+        "/tmp/texmf", "/tmp/texmf-var", "/tmp/texmf-config",
+        "/tmp/texmf-sysvar", "/tmp/texmf-sysconfig"
+    ]
+    for dir_path in tex_dirs:
         Path(dir_path).mkdir(parents=True, exist_ok=True)
 
     outdir.mkdir(parents=True, exist_ok=True)
@@ -69,6 +82,7 @@ def _run_tectonic(
         str(TECTONIC_BIN),
         "--keep-logs",
         "--synctex=0",
+        "--web-bundle",
         "--untrusted",
         "--outdir",
         str(outdir),

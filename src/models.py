@@ -66,6 +66,5 @@ class Resume(BaseModel):
     intro_paragraphs: List[str] = []
     education: List[EducationEntry] = []
     experience: List[ExperienceEntry] = []
-    publications: List[PublicationEntry] = []
     projects: List[ProjectEntry] = []
     technologies_section: Technologies

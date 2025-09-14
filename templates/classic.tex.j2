@@ -279,30 +279,6 @@
         <<% endif %>>
         <<% endfor %>>
 
-
-
-    \section{Publications}
-
-
-        <<% for pub in resume.publications %>>
-        \begin{samepage}
-            \begin{twocolentry}{
-                << pub.date >>
-            }
-                \textbf{ << pub.title >> }
-
-                \vspace{0.10 cm}
-
-                << pub.authors | join(', ') >>
-                \vspace{0.10 cm}
-                <<% if pub.doi_url %>>
-        \href{ << pub.doi_url >> }{ << pub.doi_label or pub.doi_url >> }
-                <<% endif %>>
-            \end{twocolentry}
-        \end{samepage}
-        <<% endfor %>>
-
-
     \section{Projects}
 
 
