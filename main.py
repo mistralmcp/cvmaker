@@ -19,6 +19,7 @@ PROJECT_ROOT = Path(__file__).parent
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 TEMPLATE_NAME = "classic.tex.j2"
 OUTPUT_DIR = PROJECT_ROOT / "output"
+IS_DEV = config("IS_DEV") == "true"
 
 
 server_kwargs = {
@@ -27,7 +28,7 @@ server_kwargs = {
 }
 
 
-if config("IS_DEV") == "true":
+if IS_DEV:
     mcp = FastMCP(**server_kwargs)
 else:
     mcp = FastMCP(port=3000, stateless_http=True, debug=True, **server_kwargs)
@@ -188,4 +189,7 @@ def generate_resume_pdf(
 
 
 if __name__ == "__main__":
-    mcp.run(transport="http", port=3000)
+    if IS_DEV:
+        mcp.run(transport="stdio")
+    else:
+        mcp.run(transport="streamable-http")
