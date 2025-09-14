@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.request import urlopen
 
 
-BIN_DIR = Path(__file__).resolve().parent.parent / "bin"
+BIN_DIR = "/tmp"
 TECTONIC_BIN = BIN_DIR / "tectonic"
 
 

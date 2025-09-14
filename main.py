@@ -3,7 +3,6 @@ from typing import List, Optional
 from fastmcp import FastMCP
 from pathlib import Path
 from uuid import uuid4
-from decouple import config
 
 from src.instructions import (
     RESUME_INSTRUCTIONS_PROMPT,
@@ -11,21 +10,22 @@ from src.instructions import (
     TOOL_DESCRIPTION,
 )
 from src.generate import generate_resume
-from src.utils import upload_to_bucket
+from src.utils.storage import upload_to_bucket
 
 
 SERVER_NAME = "salutcv"
-PROJECT_ROOT = Path(__file__).parent
-TEMPLATES_DIR = PROJECT_ROOT / "templates"
+TEMPLATES_DIR = "./templates"
 TEMPLATE_NAME = "classic.tex.j2"
-OUTPUT_DIR = PROJECT_ROOT / "output"
+OUTPUT_DIR = "/tmp"
 
 
 server_kwargs = {
     "name": SERVER_NAME,
     "instructions": SERVER_INSTRUCTIONS,
+    "port": 3000,
+    "stateless_http": True,
+    "debug": True,
 }
-
 
 mcp = FastMCP(**server_kwargs)
 
@@ -35,7 +35,7 @@ def health():
     return {"ok": True}
 
 
-@mcp.prompt("")
+@mcp.prompt(name="base_instructions")
 def base_instructions():
     """
     Base instructions to follow when extracting the candidate's information for the resumé.
@@ -190,4 +190,4 @@ def generate_resume_pdf(
 
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    mcp.run(transport="streamable-http")

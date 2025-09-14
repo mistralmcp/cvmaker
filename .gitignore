@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
-output/
+tmp/
 develop-eggs/
 dist/
 downloads/

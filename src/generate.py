@@ -1,7 +1,9 @@
 from typing import List, Optional
 from pathlib import Path
 
-from .utils import validate_resume_model, render_tex, compile_pdf
+from .utils.validation import validate_resume_model
+from .utils.tex import render_tex
+from .utils.pdf import compile_pdf
 
 
 def generate_resume(
