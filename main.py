@@ -30,12 +30,7 @@ server_kwargs = {
 if config("IS_DEV") == "true":
     mcp = FastMCP(**server_kwargs)
 else:
-    mcp = FastMCP(
-        port=3000, 
-        stateless_http=True, 
-        debug=True, 
-        **server_kwargs
-    )
+    mcp = FastMCP(port=3000, stateless_http=True, debug=True, **server_kwargs)
 
 
 @mcp.prompt("")

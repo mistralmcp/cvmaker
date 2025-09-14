@@ -53,51 +53,6 @@ def generate_resume(
     languages: Optional[List[str]] = None,
     technologies: Optional[List[str]] = None,
 ) -> Path:
-    """
-    Generate a resume PDF from structured resume data.
-
-    Args:
-        pdf_title: Title for the PDF document
-        pdf_author: Author name for the PDF metadata
-        name: Full name
-        location: Location/address
-        email: Email address
-        phone: Phone number
-        website_url: Optional website URL
-        website_label: Optional website display label
-        linkedin_url: Optional LinkedIn profile URL
-        linkedin_handle: Optional LinkedIn handle
-        github_url: Optional GitHub profile URL
-        github_handle: Optional GitHub handle
-        intro_paragraphs: List of introduction paragraphs
-        education_degrees: List of degree names for education entries
-        education_date_ranges: List of date ranges for education entries
-        education_institutions: List of institution names for education entries
-        education_fields_of_study: List of fields of study for education entries
-        education_highlights: List of highlight lists for education entries
-        experience_companies: List of company names for experience entries
-        experience_roles: List of role titles for experience entries
-        experience_locations: List of locations for experience entries
-        experience_date_ranges: List of date ranges for experience entries
-        experience_highlights: List of highlight lists for experience entries
-        publication_dates: List of publication dates
-        publication_titles: List of publication titles
-        publication_authors: List of author lists for publications
-        publication_doi_urls: List of DOI URLs for publications
-        publication_doi_labels: List of DOI labels for publications
-        project_titles: List of project titles
-        project_repo_urls: List of repository URLs for projects
-        project_repo_labels: List of repository labels for projects
-        project_highlights: List of highlight lists for projects
-        languages: List of programming languages
-        technologies: List of technologies/tools
-        template_name: Name of the template file to use
-        templates_dir: Directory containing templates
-        output_dir: Directory for output files
-
-    Returns:
-        Path to the generated PDF file
-    """
     model = validate_resume_model(
         # Document meta
         pdf_title=pdf_title,
