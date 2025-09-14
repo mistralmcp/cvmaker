@@ -1,36 +1,12 @@
 from __future__ import annotations
 
 import os
-import stat
-import tarfile
-import platform
 import subprocess
 from pathlib import Path
-from urllib.request import urlopen
 
 
-BIN_DIR = "/tmp"
-TECTONIC_BIN = BIN_DIR / "tectonic"
-
-
-TECTONIC_URLS = {
-    (
-        "Linux",
-        "x86_64",
-    ): "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.15.0/tectonic-0.15.0-x86_64-unknown-linux-musl.tar.gz",
-    (
-        "Linux",
-        "AMD64",
-    ): "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.15.0/tectonic-0.15.0-x86_64-unknown-linux-musl.tar.gz",
-    (
-        "Linux",
-        "aarch64",
-    ): "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.15.0/tectonic-0.15.0-aarch64-unknown-linux-musl.tar.gz",
-    (
-        "Linux",
-        "arm64",
-    ): "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.15.0/tectonic-0.15.0-aarch64-unknown-linux-musl.tar.gz",
-}
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+TECTONIC_BIN = PROJECT_ROOT / "bin" / "tectonic"
 
 
 def compile_pdf(
@@ -49,63 +25,9 @@ def compile_pdf(
             raise RuntimeError(f"No PDF file found: {output_pdf_path}")
 
 
-def _chmod_x(path: Path) -> None:
-    mode = path.stat().st_mode
-    path.chmod(mode | stat.S_IEXEC)
-
-
-def _download_file(url: str, dest: Path) -> None:
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    with urlopen(url) as r, open(dest, "wb") as f:
-        f.write(r.read())
-
-
-def _extract_tectonic_from_tgz(tgz_path: Path, dest_bin: Path) -> None:
-    with tarfile.open(tgz_path, "r:gz") as tf:
-        member = next(
-            (
-                m
-                for m in tf.getmembers()
-                if m.name.endswith("/tectonic") or m.name == "tectonic"
-            ),
-            None,
-        )
-        if member is None:
-            for m in tf.getmembers():
-                if os.path.basename(m.name) == "tectonic":
-                    member = m
-                    break
-        if member is None:
-            raise RuntimeError("Tectonic binary not found in archive.")
-
-        tf.extract(member, path=dest_bin.parent)
-        extracted_path = dest_bin.parent / member.name
-        if extracted_path.resolve() != dest_bin.resolve():
-            dest_bin.parent.mkdir(parents=True, exist_ok=True)
-            extracted_path.replace(dest_bin)
-    _chmod_x(dest_bin)
-
-
 def _ensure_tectonic() -> None:
-    if TECTONIC_BIN.exists():
-        return
-
-    system = platform.system()
-    machine = platform.machine()
-
-    url = (
-        TECTONIC_URLS.get((system, machine))
-        or TECTONIC_URLS.get((system, machine.upper()))
-        or TECTONIC_URLS.get((system, "x86_64"))
-    )
-    if not url:
-        raise RuntimeError(f"No preconfigured Tectonic binary for {system}/{machine}")
-
-    BIN_DIR.mkdir(parents=True, exist_ok=True)
-    tgz_path = BIN_DIR / "tectonic.tgz"
-    _download_file(url, tgz_path)
-    _extract_tectonic_from_tgz(tgz_path, TECTONIC_BIN)
-    tgz_path.unlink(missing_ok=True)
+    if not TECTONIC_BIN.exists():
+        raise RuntimeError(f"Tectonic binary not found at {TECTONIC_BIN}")
 
 
 def _run_tectonic(
