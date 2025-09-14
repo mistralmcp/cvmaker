@@ -2,6 +2,10 @@
 
 A Python tool to generate professional resumes in PDF format using LaTeX templates.
 
+## Live Server
+
+The service is deployed and accessible at: [https://cvmaker-0c81a29d.alpic.live/](https://cvmaker-0c81a29d.alpic.live/)
+
 ## Prerequisites
 
 1. Python 3.10 or higher
@@ -16,22 +20,29 @@ Choose one of the following methods:
 #### Option 1: Tectonic (Recommended)
 
 **macOS:**
+- Using Homebrew:
 ```bash
 brew install tectonic
 ```
+- Direct download: [Tectonic for macOS](https://github.com/tectonic-typesetting/tectonic/releases)
 
 **Linux:**
+The Tectonic executable is already included in the `bin/` directory of this project. No additional installation is needed.
+
+For manual installation:
 ```bash
 curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh  # Install Rust first
 cargo install tectonic
 ```
 
 **Windows:**
+- Using package managers:
 ```bash
 scoop install tectonic
 # or
 choco install tectonic
 ```
+- Direct download: [Tectonic for Windows](https://github.com/tectonic-typesetting/tectonic/releases)
 
 #### Option 2: Full LaTeX Distribution
 
@@ -77,40 +88,27 @@ For development, you'll need additional packages:
 pip install pytest pytest-mock
 ```
 
-## Running Tests
-
-Run unit tests:
-```bash
-pytest tests/test_generate.py -v
-```
-
-Run integration tests (requires LaTeX engine):
-```bash
-pytest tests/test_integration.py -v
-```
-
-Run all tests:
-```bash
-pytest -v
-```
-
 ## Project Structure
 
 ```
 cvmaker/
+├── bin/
+│   └── tectonic        # Tectonic executable for Linux
 ├── src/
 │   ├── generate.py      # Main resume generation logic
 │   ├── models.py        # Pydantic models for data validation
-│   ├── prompts.py       # AI prompt templates
+│   ├── instructions.py  # AI instructions and prompts
 │   └── utils/
 │       ├── pdf.py       # PDF compilation utilities
 │       ├── tex.py       # LaTeX rendering utilities
+│       ├── storage.py   # Storage utilities
 │       └── validation.py # Data validation utilities
 ├── templates/
 │   └── classic.tex.j2   # Default LaTeX template
 ├── tests/
-│   ├── conftest.py      # Test fixtures
-│   ├── test_generate.py # Unit tests
-│   └── test_integration.py # Integration tests
-└── main.py             # CLI entry point
+│   └── __init__.py     # Test package initialization
+├── tmp/                # Temporary files directory
+├── main.py            # CLI entry point
+├── pyproject.toml     # Project configuration
+└── README.md          # Project documentation
 ```

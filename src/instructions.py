@@ -1,43 +1,5 @@
 SERVER_INSTRUCTIONS = """
-CV Maker MCP Server - Professional Resume Generator
-
-This MCP server provides AI-powered resume generation capabilities using LaTeX templating and structured data models.
-
-## How to Use This Server
-
-### 1. Enable the Connector
-When this MCP connector is enabled, you gain access to:
-- A specialized resume writing system prompt (via @base_instructions)
-- A professional PDF generation tool (generate_resume_pdf)
-
-### 2. Workflow for Resume Creation
-**IMPORTANT:** Always follow this sequence:
-
-1. **Start with the system prompt**: Use the @base_instructions prompt to activate the resume writing expertise
-2. **Gather candidate information**: Follow the structured interview process outlined in the prompt
-3. **Generate the PDF**: Use the generate_resume_pdf tool with the collected data
-
-### 3. System Prompt Usage
-Call @base_instructions at the beginning of any resume creation session. This prompt will:
-- Activate expert resume writing capabilities
-- Provide structured data collection guidelines
-- Ensure recruitment optimization best practices
-- Guide you through the complete candidate interview process
-
-### 4. Tool Usage
-After collecting all necessary information, use generate_resume_pdf with:
-- All required fields (pdf_title, pdf_author, name, location, email)
-- Optional fields as available (phone, URLs, social profiles)
-- Structured lists for education, experience, projects, publications
-- Technology skills and programming languages
-
-### 5. Best Practices
-- Always use the system prompt first to ensure proper context
-- Follow the structured data collection process completely
-- Validate all required fields before calling the generation tool
-- The tool returns a URL to the generated PDF document
-
-This server transforms raw candidate information into professional, ATS-optimized resumes ready for job applications.
+This MCP server provides AI-powered resume generation through LaTeX templating, requiring you to first use @base_instructions to activate the resume writing system, then gather candidate information through a structured interview process, and finally generate a professional PDF using the generate_resume_pdf tool with the collected data.
 """
 
 
